@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقييم مطاعم مأرب</title>
+    <meta name="description" content="قيم تجربتك في مطاعم مأرب">
+    <meta name="theme-color" content="#803a7a">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .rating-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #803a7a 0%, #5a2a5a 100%);
+            background-attachment: fixed;
+            padding: 2rem 1rem;
+            direction: rtl;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .rating-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 1px 0px rgba(255, 255, 255, 0.8) inset;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .rating-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #803a7a, #5a2a5a, #d4a5d4, #b76eb8);
+            background-size: 300% 100%;
+            animation: gradientShift 8s ease infinite;
+            z-index: 10;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .rating-header {
+            background: linear-gradient(135deg, #803a7a 0%, #5a2a5a 100%);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rating-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            height: 55px;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .rating-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+        }
+
+        .rating-header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+        }
+
+        /* تحسينات الصورة */
+        .image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 500px; /* ارتفاع أكبر لإظهار المطعم كامل */
+            object-fit: cover;
+            object-position: center center; /* تركيز على منتصف الصورة */
+            display: block;
+            border-bottom: 4px solid #803a7a;
+            transition: all 0.5s ease;
+        }
+
+        .restaurant-image:hover {
+            transform: scale(1.03);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(128, 58, 122, 0.3));
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .image-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-overlay p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .rating-form {
+            padding: 3rem 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #803a7a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-sizing: border-box;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #803a7a;
+            box-shadow: 0 0 0 3px rgba(128, 58, 122, 0.1);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.6;
+        }
+
+        .optional {
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        .rating-stars {
+            text-align: center;
+            margin: 2.5rem 0;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            border: 2px solid rgba(128, 58, 122, 0.1);
+            position: relative;
+        }
+
+        .rating-stars::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #803a7a, #5a2a5a);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .rating-stars h3 {
+            font-size: 1.5rem;
+            color: #803a7a;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .star {
+            font-size: 3.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            filter: grayscale(1);
+            transform: scale(1);
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+            filter: grayscale(0);
+            transform: scale(1.2);
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .star:hover ~ .star {
+            color: #ddd;
+            filter: grayscale(1);
+            transform: scale(1);
+        }
+
+        .rating-text {
+            font-size: 1.3rem;
+            color: #803a7a;
+            margin-top: 1rem;
+            font-weight: 600;
+            min-height: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #803a7a 0%, #5a2a5a 100%);
+            color: white;
+            border: none;
+            padding: 1.5rem 3rem;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(128, 58, 122, 0.4);
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .submit-btn:disabled:hover::before {
+            left: -100%;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            color: #803a7a;
+            font-weight: 600;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 2rem;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .success-message i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design - تحسينات للجوال */
+        @media (max-width: 768px) {
+            .rating-page {
+                padding: 1rem 0.5rem;
+            }
+
+            .rating-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .rating-header {
+                padding: 2.5rem 1.5rem 1.5rem;
+            }
+
+            .rating-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .rating-header p {
+                font-size: 1.1rem;
+            }
+
+            /* تحسين أبعاد الصورة للجوال */
+            .restaurant-image {
+                height: 350px; /* ارتفاع أقل للجوال */
+            }
+
+            .image-overlay {
+                padding: 1.5rem;
+            }
+
+            .image-overlay h3 {
+                font-size: 1.3rem;
+            }
+
+            .image-overlay p {
+                font-size: 1rem;
+            }
+
+            .star {
+                font-size: 2.8rem;
+            }
+
+            .rating-stars {
+                padding: 2rem 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .back-btn {
+                width: 50px;
+                height: 50px;
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rating-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .restaurant-image {
+                height: 280px; /* ارتفاع مناسب للشاشات الصغيرة */
+            }
+
+            .stars-container {
+                gap: 0.5rem;
+            }
+
+            .star {
+                font-size: 2.2rem;
+            }
+
+            .rating-text {
+                font-size: 1.1rem;
+            }
+
+            .submit-btn {
+                padding: 1.2rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .image-overlay {
+                padding: 1rem;
+            }
+
+            .image-overlay h3 {
+                font-size: 1.1rem;
+            }
+
+            .image-overlay p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* تحسينات للأجهزة اللوحية */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .restaurant-image {
+                height: 450px; /* ارتفاع متوسط للأجهزة اللوحية */
+            }
+        }
+
+        /* تحسينات للشاشات الكبيرة */
+        @media (min-width: 1200px) {
+            .restaurant-image {
+                height: 550px; /* ارتفاع أكبر للشاشات الكبيرة */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="rating-page">
+        <div class="rating-container">
+            <div class="rating-header">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <h1>🌟 تقييم مطاعم مأرب</h1>
+                <p>شاركنا رأيك في تجربتك لدينا</p>
+            </div>
+
+            <div class="image-container">
+                <img src="images/33.jpg" alt="مطاعم مأرب - الداخلية" class="restaurant-image">
+                <div class="image-overlay">
+                    <h3>مطاعم مأرب</h3>
+                    <p>تجربة طعام لا تُنسى في أجواء تراثية أصيلة</p>
+                </div>
+            </div>
+
+            <form class="rating-form" id="ratingForm">
+                <div class="form-group">
+                    <label for="customerName">
+                        <i class="fas fa-user"></i>
+                        الاسم الكريم *
+                    </label>
+                    <input type="text" id="customerName" name="customerName" required placeholder="أدخل اسمك الكريم">
+                </div>
+
+                <div class="form-group">
+                    <label for="customerEmail">
+                        <i class="fas fa-envelope"></i>
+                        البريد الإلكتروني <span class="optional">(اختياري)</span>
+                    </label>
+                    <input type="email" id="customerEmail" name="customerEmail" placeholder="your.email@example.com">
+                </div>
+
+                <div class="rating-stars">
+                    <h3>
+                        <i class="fas fa-star"></i>
+                        تقييمك للمطعم
+                    </h3>
+                    <div class="stars-container">
+                        <span class="star" data-rating="1">⭐</span>
+                        <span class="star" data-rating="2">⭐</span>
+                        <span class="star" data-rating="3">⭐</span>
+                        <span class="star" data-rating="4">⭐</span>
+                        <span class="star" data-rating="5">⭐</span>
+                    </div>
+                    <div class="rating-text" id="ratingText">اختر تقييمك من فضلك</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment">
+                        <i class="fas fa-comment"></i>
+                        تعليقاتك وملاحظاتك
+                    </label>
+                    <textarea id="comment" name="comment" placeholder="شاركنا تجربتك وأي ملاحظات أو اقتراحات لتحسين خدماتنا..."></textarea>
+                </div>
+
+                <div class="loading" id="loading">
+                    <i class="fas fa-spinner"></i>
+                    جاري إرسال التقييم...
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>شكراً لك!</h3>
+                    <p>تم إرسال تقييمك بنجاح وسيصل إلى إدارة المطعم</p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                    إرسال التقييم
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 0;
+        const stars = document.querySelectorAll('.star');
+        const ratingText = document.getElementById('ratingText');
+        const submitBtn = document.getElementById('submitBtn');
+        const customerName = document.getElementById('customerName');
+        const loading = document.getElementById('loading');
+        const successMessage = document.getElementById('successMessage');
+
+        const ratingTexts = {
+            1: '❌ ضعيف - نحتاج لتحسين كبير',
+            2: '⚠️ مقبول - يمكن أن يكون أفضل',
+            3: '👍 جيد - تجربة مرضية',
+            4: '✨ ممتاز - تجربة رائعة',
+            5: '🌟 استثنائي - تجربة لا تُنسى!'
+        };
+
+        // Handle star rating
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                currentRating = parseInt(this.dataset.rating);
+                updateStarRating(currentRating);
+                updateSubmitButton();
+            });
+
+            star.addEventListener('mouseenter', function() {
+                const hoverRating = parseInt(this.dataset.rating);
+                updateStarRating(hoverRating);
+                ratingText.textContent = ratingTexts[hoverRating];
+                ratingText.style.color = '#803a7a';
+            });
+        });
+
+        document.querySelector('.stars-container').addEventListener('mouseleave', function() {
+            updateStarRating(currentRating);
+            ratingText.textContent = currentRating > 0 ? ratingTexts[currentRating] : 'اختر تقييمك من فضلك';
+        });
+
+        function updateStarRating(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Handle form validation
+        customerName.addEventListener('input', updateSubmitButton);
+
+        function updateSubmitButton() {
+            const nameValid = customerName.value.trim().length > 0;
+            const ratingValid = currentRating > 0;
+            
+            submitBtn.disabled = !(nameValid && ratingValid);
+        }
+
+        // Handle form submission with email sending
+        document.getElementById('ratingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: customerName.value.trim(),
+                email: document.getElementById('customerEmail').value.trim() || 'لم يتم تقديم بريد إلكتروني',
+                rating: currentRating,
+                comment: document.getElementById('comment').value.trim() || 'لم يتم تقديم تعليق',
+                timestamp: new Date().toLocaleString('ar-SA'),
+                restaurant: 'مطاعم مأرب'
+            };
+
+            // Show loading
+            submitBtn.style.display = 'none';
+            loading.style.display = 'block';
+
+            try {
+                // Send email using EmailJS
+                await sendRatingEmail(formData);
+                
+                // Store in localStorage as backup
+                const ratings = JSON.parse(localStorage.getItem('marbRestaurantRatings') || '[]');
+                ratings.push(formData);
+                localStorage.setItem('marbRestaurantRatings', JSON.stringify(ratings));
+                
+                // Show success message
+                loading.style.display = 'none';
+                successMessage.style.display = 'block';
+                
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                    submitBtn.style.display = 'block';
+                    document.getElementById('ratingForm').reset();
+                    currentRating = 0;
+                    updateStarRating(0);
+                    ratingText.textContent = 'اختر تقييمك من فضلك';
+                    updateSubmitButton();
+                }, 3000);
+                
+            } catch (error) {
+                // Fallback to localStorage if email fails
+                console.error('Failed to send email:', error);
+                
+                const ratings = JSON.parse(localStorage.getItem('marbRestaurantRatings') || '[]');
+                ratings.push(formData);
+                localStorage.setItem('marbRestaurantRatings', JSON.stringify(ratings));
+                
+                loading.style.display = 'none';
+                submitBtn.style.display = 'block';
+                alert('تم حفظ التقييم محلياً. شكراً لك!');
+                
+                // Reset form
+                document.getElementById('ratingForm').reset();
+                currentRating = 0;
+                updateStarRating(0);
+                ratingText.textContent = 'اختر تقييمك من فضلك';
+                updateSubmitButton();
+            }
+        });
+
+        // Email sending function using EmailJS
+        async function sendRatingEmail(formData) {
+            // You need to set up EmailJS account and replace these with your actual credentials
+            const serviceID = 'YOUR_EMAILJS_SERVICE_ID';
+            const templateID = 'YOUR_EMAILJS_TEMPLATE_ID';
+            const publicKey = 'YOUR_EMAILJS_PUBLIC_KEY';
+            
+            const emailParams = {
+                to_email: 'shuaisha10@gmail.com',
+                from_name: formData.name,
+                from_email: formData.email,
+                subject: `تقييم جديد - مطاعم مأرب - ${formData.rating} نجوم`,
+                message: `
+                    تقييم جديد لمطاعم مأرب:
+                    
+                    الاسم: ${formData.name}
+                    البريد الإلكتروني: ${formData.email}
+                    التقييم: ${formData.rating} / 5 نجوم
+                    التعليق: ${formData.comment}
+                    الوقت: ${formData.timestamp}
+                    
+                    ${formData.rating >= 4 ? '🌟 تقييم إيجابي' : formData.rating >= 3 ? '👍 تقييم متوسط' : '⚠️ يحتاج تحسين'}
+                `,
+                rating: formData.rating,
+                timestamp: formData.timestamp
+            };
+
+            // This is a placeholder - you need to implement actual email sending
+            // For now, we'll simulate a successful email send
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // Simulate email sending - in production, use EmailJS or similar service
+                    console.log('Email would be sent to:', 'shuaisha10@gmail.com');
+                    console.log('Email content:', emailParams);
+                    resolve();
+                }, 2000);
+            });
+        }
+
+        // Initialize
+        updateSubmitButton();
+        
+        // Add loading animation
+        document.body.style.opacity = '0';
+        setTimeout(() => {
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity = '1';
+        }, 100);
+    </script>
+</body>
+</html>

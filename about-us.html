@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نبذة عنا - شركة مطاعم مأرب</title>
+    <meta name="description" content="تعرف على قصة مطاعم مأرب ورؤيتنا في إحياء الأكلات الشعبية">
+    <meta name="theme-color" content="#803a7a">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .about-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #803a7a 0%, #5a2a5a 100%);
+            background-attachment: fixed;
+            padding: 2rem 1rem;
+            direction: rtl;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 1px 0px rgba(255, 255, 255, 0.8) inset;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .about-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #803a7a, #5a2a5a, #d4a5d4, #b76eb8);
+            background-size: 300% 100%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .about-header {
+            background: linear-gradient(135deg, #803a7a 0%, #5a2a5a 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            height: 55px;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+        }
+
+        .about-content {
+            padding: 4rem 3rem;
+        }
+
+        .story-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 25px;
+            padding: 4rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(128, 58, 122, 0.1);
+        }
+
+        .story-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #803a7a, #5a2a5a);
+        }
+
+        .story-section h2 {
+            font-size: 2.8rem;
+            color: #803a7a;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-weight: 700;
+        }
+
+        .story-section p {
+            font-size: 1.3rem;
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 2rem;
+            text-align: justify;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .highlight-text {
+            background: linear-gradient(45deg, #803a7a, #5a2a5a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                0 1px 0px rgba(255, 255, 255, 0.9) inset;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #803a7a, #5a2a5a);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 25px 50px rgba(128, 58, 122, 0.25),
+                0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #803a7a;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #803a7a, #5a2a5a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            color: #803a7a;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .values-section {
+            background: linear-gradient(135deg, #803a7a 0%, #5a2a5a 100%);
+            color: white;
+            border-radius: 25px;
+            padding: 4rem 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .values-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .values-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .value-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .value-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .value-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .value-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            font-weight: 600;
+        }
+
+        .value-item p {
+            line-height: 1.7;
+            opacity: 0.95;
+            font-size: 1.05rem;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #803a7a, #5a2a5a);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(128, 58, 122, 0.2);
+            border-color: #803a7a;
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(45deg, #803a7a, #5a2a5a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-page {
+                padding: 1rem 0.5rem;
+            }
+
+            .about-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .about-header {
+                padding: 3rem 1.5rem 2rem;
+            }
+
+            .about-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-header p {
+                font-size: 1.2rem;
+            }
+
+            .story-section {
+                padding: 2.5rem 2rem;
+            }
+
+            .story-section h2 {
+                font-size: 2.2rem;
+            }
+
+            .story-section p {
+                font-size: 1.1rem;
+                text-align: right;
+            }
+
+            .features-grid,
+            .values-grid,
+            .stats-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .feature-card,
+            .value-item,
+            .stat-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .back-btn {
+                width: 50px;
+                height: 50px;
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-header h1 {
+                font-size: 2rem;
+            }
+
+            .story-section h2,
+            .values-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .feature-icon {
+                font-size: 3rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card,
+        .value-item,
+        .stat-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .feature-card:nth-child(2),
+        .value-item:nth-child(2),
+        .stat-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .feature-card:nth-child(3),
+        .value-item:nth-child(3),
+        .stat-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(4),
+        .value-item:nth-child(4),
+        .stat-card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="about-page">
+        <div class="about-container">
+            <div class="about-header">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <h1>🍽️ نبذة عنا</h1>
+                <p>قصة شركة مطاعم مأرب - رحلة من الشغف إلى التميز</p>
+            </div>
+
+            <div class="about-content">
+                <div class="story-section">
+                    <h2>
+                        <i class="fas fa-book-open"></i>
+                        قصتنا
+                    </h2>
+                    <p>
+                        <span class="highlight-text">شركة مطاعم مأرب للأكلات الشعبية 🍽️🔥</span><br><br>
+                        منذ انطلاقتنا عام 2003، وضعنا هدفًا ساميًا نصب أعيننا: إحياء أصالة الأكلات الشعبية بلمسة عصرية تلبي تطلعات جميع الأذواق ❤️.
+                    </p>
+                    <p>
+                        في كل طبق نقدمه، تجد قصة تراثية تفوح بروائح الماضي وتتناغم مع جودة الحاضر. من اللحم الحنيذ والمندي إلى السمك الطازج والعقدة والمطبق والفول الفخار، نحن نصنع الطعام بشغفٍ لا يُضاهى ليكون تجربة استثنائية تأخذك في رحلة من النكهات التي لا تُنسى 😋.
+                    </p>
+                    <p>
+                        <span class="highlight-text">✨ مطاعم مأرب ليست مجرد مكان لتناول الطعام، بل هي محطة تذوق تجمع بين عبق التراث وجودة الابتكار.</span> هنا، نعيد تعريف المأكولات الشعبية لتُصبح أكثر من مجرد وجبة... إنها ذاكرة تُصنع على الطاولة.
+                    </p>
+                    <p>
+                        <span class="highlight-text">مرحبًا بك حيث الأصالة تلتقي بالإبداع! 🌟</span>
+                    </p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>أطباق طازجة ومحضرة يومياً</h3>
+                        <p>نحضر جميع أطباقنا يومياً باستخدام أجود المكونات الطازجة والمحلية لضمان الجودة والنكهة الأصيلة</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>خدمة عملاء متميزة</h3>
+                        <p>فريقنا المدرب يحرص على تقديم أفضل خدمة وضمان راحتكم وسعادتكم من لحظة دخولكم حتى مغادرتكم</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>أجواء عائلية راقية</h3>
+                        <p>مساحة مريحة وأجواء دافئة تناسب جميع المناسبات العائلية والاجتماعية بتصميم عصري وأنيق</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3>أسعار مناسبة للجميع</h3>
+                        <p>نقدم أطباقاً فاخرة بأسعار معقولة تناسب جميع الميزانيات دون المساس بالجودة أو الكمية</p>
+                    </div>
+                </div>
+
+                <div class="values-section">
+                    <h2>قيمنا ومبادئنا</h2>
+                    <div class="values-grid">
+                        <div class="value-item">
+                            <h3>
+                                <i class="fas fa-star"></i>
+                                الجودة
+                            </h3>
+                            <p>نلتزم بأعلى معايير الجودة في كل ما نقدمه من مكونات وخدمات وتجربة طعام</p>
+                        </div>
+
+                        <div class="value-item">
+                            <h3>
+                                <i class="fas fa-handshake"></i>
+                                الأمانة
+                            </h3>
+                            <p>نتعامل بصدق وشفافية مع جميع عملائنا في الأسعار والمكونات والخدمات</p>
+                        </div>
+
+                        <div class="value-item">
+                            <h3>
+                                <i class="fas fa-users"></i>
+                                الضيافة
+                            </h3>
+                            <p>نرحب بكم كأفراد من العائلة الكريمة ونقدم لكم أفضل ما لدينا</p>
+                        </div>
+
+                        <div class="value-item">
+                            <h3>
+                                <i class="fas fa-flag"></i>
+                                الأصالة
+                            </h3>
+                            <p>نحافظ على الأصالة في النكهات مع تجديد مستمر في طرق التقديم والخدمة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-number">7+</div>
+                        <div class="stat-label">سنوات من التميز</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">50,000+</div>
+                        <div class="stat-label">عميل سعيد</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">طبق مميز</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label">طاهي محترف</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth animations on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.feature-card, .value-item, .stat-card').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Add loading animation
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
